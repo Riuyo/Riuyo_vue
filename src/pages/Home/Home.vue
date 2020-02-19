@@ -22,27 +22,100 @@
         <li>数码家电</li>
         <li>全球特色</li>
       </ul>
+      <!-- 下拉菜单 -->
+      <div class="toggle">
+        <i class="iconfont icon-xiala"></i>
+      </div>
+
     </div>
     
     <!-- 轮播图 -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>
+           <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>   
+           <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>   
+           <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>   
+           <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>   
+           <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>   
+           <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>   
+           <div class="swiper-slide">
+            <img src="../../common/100b633b1b237e0102458bbf4d851cb9.webp" alt="">
+          </div>             
+      </div>
+    </div>
+
+
+    <!-- 服务 -->
+    <ul class="service-policy">
+      <li v-for="(policyItem, index) in policyDescList" :key="index">
+        <img class="icon" :src="policyItem.icon" alt="">
+        <span>{{policyItem.desc}}</span>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import Swiper from 'swiper'
+import 'swiper/css/swiper.min.css'
+
 export default {
 
-  mounted(){
+  methods:{
+
+  },
+
+  async mounted(){
+    //发送ajax请求,获取首页数据
+    let indexDatas = await this.$API.getIndexData()
+    let indexCateModule = await this.$API.getIndexCateModule()
+    const {focusList, policyDescList, kingKongModule,categoryHotSellModule} = indexDatas
+    this.focusList = focusList
+		this.policyDescList = policyDescList
+    this.kingKongModule = kingKongModule.kingKongList
+    this.indexCateModule = indexCateModule
+    this.categoryHotSellModule = categoryHotSellModule.categoryList
+
+
+    // 创建BScroll实例对象
     new BScroll('.navContainer',{
       scrollX:true,
       // probeType:2,
       // click:true
     })
+    // 创建Swiper实例对象
+    new Swiper ('.swiper-container', { 
+      loop: true, // 循环模式选项
+      pagination: {
+          el: ".swiper-pagination"
+        },
+      paginationType: 'fraction'
+  
+    })  
   }
+
+
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" rel ="stylesheet/stylus">
+@import '../../common/stylus/mixins.styl'
 #homeContainer
   width 100%
   height 5000px
@@ -101,6 +174,7 @@ export default {
     font-size 28px
     background-color hotpink
     overflow hidden
+    position relative
   
     .navList
       width 1460px
@@ -113,11 +187,56 @@ export default {
         font-size 28px
         line-height 60px
         text-align center
-        margin 0 20px
+        margin 0 32px
+        &.active
+          color red
+
+    .toggle
+      width 100px
+      height 60px
+      position absolute
+      right 0
+      top 0
+      background-color white
+
+      .iconfont
+        padding 30px
+      
+      
   
 
 
   // 轮播图
+  .swiper-container
+    width 100%
+    height 370px
+    .swiper-wrapper
+      width 6000px
+      height 370px
+      .swiper-slide
+        width 750px
+        height 370px
+
+    //服务政策
+  .service-policy
+    width 100%
+    height 72px
+    padding 0 30px
+    background-color #fff
+    box-sizing border-box
+    display flex
+    li
+      display flex
+      width 33.3333%
+      height 100%
+      text-align center
+      line-height 72px
+      font-size 24px
+      .icon
+        width 32px
+        height 32px
+        vertical-align center 
+        margin 20px 5px 0
 
 
  
