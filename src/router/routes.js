@@ -1,5 +1,6 @@
 import Home from '../pages/Home/Home.vue'
 import Sort from '../pages/Sort/Sort.vue'
+import SortRight from '../pages/Sort/SortRight.vue'
 import Worth from '../pages/Worth/Worth.vue'
 import Cart from '../pages/Cart/Cart.vue'
 import Personal from '../pages/Personal/Personal.vue'
@@ -13,7 +14,19 @@ export default [
   },
   {
     path: '/sort',
-    component: Sort
+    component: Sort,
+    children:[
+      {
+        path:'/sort/right/:id',
+        component:SortRight
+      },
+      // {
+      //   path: '/cate',
+      //   redirect: '/cate/right'
+      // }
+
+
+    ]
   },
   {
     path: '/worth',
@@ -29,6 +42,6 @@ export default [
   },
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/sort'
   }
 ]
